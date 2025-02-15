@@ -1,1 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lipstick Finder</title>
+</head>
+<body>
+    <h1>Find Your Lipstick Shade</h1>
+    <form method="POST">
+        <input type="text" name="shade" placeholder="Enter lipstick shade">
+        <button type="submit">Search</button>
+    </form>
+    {% if lipsticks %}
+        <h2>Available Lipsticks in Shade: {{ shade }}</h2>
+        <ul>
+            {% for lipstick in lipsticks %}
+                <li>{{ lipstick.name }} - {{ lipstick.brand }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No lipsticks found.</p>
+    {% endif %}
+</body>
+</html>
 
