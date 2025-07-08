@@ -2,23 +2,43 @@
 <html>
 <head>
     <title>Lipstick Finder</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-<body>
-    <h1>Find Your Lipstick Shade</h1>
-    <form method="POST">
-        <input type="text" name="shade" placeholder="Enter lipstick shade">
-        <button type="submit">Search</button>
-    </form>
-    {% if lipsticks %}
-        <h2>Available Lipsticks in Shade: {{ shade }}</h2>
-        <ul>
-            {% for lipstick in lipsticks %}
-                <li>{{ lipstick.name }} - {{ lipstick.brand }}</li>
+<body class="bg-light">
+    <div class="container py-4">
+        <h1 class="text-center mb-4">💄 Lipstick Finder</h1>
+
+        <form method="POST" class="row g-3">
+            <div class="col-md-5">
+                <input type="text" name="shade" class="form-control" placeholder="Enter shade" value="{{ shade }}">
+            </div>
+            <div class="col-md-5">
+                <input type="text" name="brand" class="form-control" placeholder="Enter brand (optional)" value="{{ brand }}">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Search</button>
+            </div>
+        </form>
+
+        {% if lipsticks %}
+        <div class="row mt-5">
+            {% for item in lipsticks %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ item.image_link }}" class="card-img-top" alt="Image not available" style="height: 200px; object-fit: contain;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        <p class="card-text">Brand: {{ item.brand | capitalize }}</p>
+                        <p class="card-text">Price: ${{ item.price }}</p>
+                        <a href="{{ item.product_link }}" class="btn btn-sm btn-outline-primary" target="_blank">View Product</a>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
-        </ul>
-    {% else %}
-        <p>No lipsticks found.</p>
-    {% endif %}
+        </div>
+        {% elif shade or brand %}
+        <p class="mt-4 text-center text-muted">No results found for your search.</p>
+        {% endif %}
+    </div>
 </body>
 </html>
-
